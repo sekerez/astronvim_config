@@ -31,8 +31,6 @@ local mappings = {
 }
 
 if os.getenv("COLEMAK") == "true" then
-  mappings["n"]["I"] = { "<cmd>bnext<cr>" }
-  mappings["n"]["M"] = { "<cmd>bprev<cr>" }
   mappings["n"]["m"] = { "h" }
   mappings["n"]["n"] = { "j" }
   mappings["n"]["e"] = { "k" }
@@ -45,38 +43,45 @@ if os.getenv("COLEMAK") == "true" then
   mappings["n"]["l"] = { "i" }
   mappings["n"]["J"] = { "N" }
   mappings["n"]["K"] = { "E" } -- So K is "end"
-  mappings["v"]["m"] = { "h" }
-  mappings["v"]["n"] = { "j" }
-  mappings["v"]["i"] = { "l" }
-  mappings["v"]["e"] = { "k" }
-  mappings["v"]["M"] = { "H" }
-  mappings["v"]["N"] = { "J" }
-  mappings["v"]["I"] = { "L" }
-  mappings["v"]["E"] = { "K" }
-  mappings["v"]["h"] = { "m" }
-  mappings["v"]["j"] = { "n" }
-  mappings["v"]["k"] = { "e" }
-  mappings["v"]["l"] = { "i" }
-  mappings["v"]["H"] = { "M" }
-  mappings["v"]["J"] = { "N" }
-  mappings["v"]["K"] = { "E" }
-  mappings["v"]["L"] = { "I" }
-  mappings["x"]["m"] = { "h" }
-  mappings["x"]["n"] = { "j" }
-  mappings["x"]["i"] = { "l" }
-  mappings["x"]["e"] = { "k" }
-  mappings["x"]["M"] = { "H" }
-  mappings["x"]["N"] = { "J" }
-  mappings["x"]["I"] = { "L" }
-  mappings["x"]["E"] = { "K" }
-  mappings["x"]["h"] = { "m" }
-  mappings["x"]["j"] = { "n" }
-  mappings["x"]["k"] = { "e" }
-  mappings["x"]["l"] = { "i" }
-  mappings["x"]["H"] = { "M" }
-  mappings["x"]["J"] = { "N" }
-  mappings["x"]["K"] = { "E" }
-  mappings["x"]["L"] = { "I" }
+  mappings["n"]["L"] = { "I" }
+  mappings["n"]["I"] = { "<cmd>bnext<cr>" }
+  mappings["n"]["M"] = { "<cmd>bprev<cr>" }
+  mappings["v"] = {
+    m = { "h" },
+    n = { "j" },
+    i = { "l" },
+    e = { "k" },
+    M = { "H" },
+    N = { "J" },
+    I = { "L" },
+    E = { "K" },
+    h = { "m" },
+    j = { "n" },
+    k = { "e" },
+    l = { "i" },
+    H = { "M" },
+    J = { "N" },
+    K = { "E" },
+    L = { "I" },
+  }
+  mappings["x"] = {
+    m = { "h" },
+    n = { "j" },
+    i = { "l" },
+    e = { "k" },
+    M = { "H" },
+    N = { "J" },
+    I = { "L" },
+    E = { "K" },
+    h = { "m" },
+    j = { "n" },
+    k = { "e" },
+    l = { "i" },
+    H = { "M" },
+    J = { "N" },
+    K = { "E" },
+    L = { "I" },
+  }
 end
 
 
