@@ -9,6 +9,7 @@ local mappings = {
     -- mappings seen under group name "Buffer"
     ["L"] = { "<cmd>bnext<cr>" },
     ["H"] = { "<cmd>bprev<cr>" },
+    ["<leader>v"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" },
     ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
     ["<leader>bc"] = {
       "<cmd>BufferLinePickClose<cr>",
