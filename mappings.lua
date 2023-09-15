@@ -13,24 +13,24 @@ local mappings = {
     ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
     ["<leader>bc"] = {
       "<cmd>BufferLinePickClose<cr>",
-      desc = "Pick to close"
+      desc = "Pick to close",
     },
     ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
     ["<leader>bt"] = {
       "<cmd>BufferLineSortByTabs<cr>",
-      desc = "Sort by tabs"
+      desc = "Sort by tabs",
     },
-    ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" }
+    ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },
   t = {
     ["<esc>"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
-    ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" }
-  }
+    ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
+  },
 }
 
-if os.getenv("COLEMAK") == "true" then
+if os.getenv "COLEMAK" == "true" then
   mappings["n"]["m"] = { "h" }
   mappings["n"]["n"] = { "j" }
   mappings["n"]["e"] = { "k" }
@@ -83,6 +83,5 @@ if os.getenv("COLEMAK") == "true" then
     L = { "I" },
   }
 end
-
 
 return mappings
