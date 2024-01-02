@@ -1,3 +1,3 @@
 return {
-  Normal = { fg = "#abb2bf", bg = "#010101" },
+  -- Normal = { fg = "#abb2bf", bg = "#010101" },
 }
