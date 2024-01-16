@@ -3,7 +3,7 @@
 return {
   -- You can also add new plugins here as well:
   -- Add plugins, the lazy syntax
-  { "aduros/ai.vim" },
+  -- { "aduros/ai.vim" },
   {
     "zbirenbaum/copilot.lua",
     cmd = { "Copilot" },
@@ -42,6 +42,14 @@ return {
       format_after_save = { lsp_fallback = true },
       -- log_level = vim.log.levels.DEBUG,
     },
+  },
+  {
+    "klen/nvim-test",
+    -- keys = {
+    --   { "<leader>T" },
+    -- },
+    event = { "BufEnter *test*" },
+    config = function() require("nvim-test").setup {} end,
   },
   -- "andweeb/presence.nvim",
   -- {

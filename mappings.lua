@@ -20,6 +20,14 @@ local mappings = {
       "<cmd>BufferLineSortByTabs<cr>",
       desc = "Sort by tabs",
     },
+    ["<leader>T"] = { desc = "󰙨 Test" },
+    ["<leader>Tn"] = { "<cmd>TestNearest<cr>", desc = "Nearest" },
+    ["<leader>Ts"] = { "<cmd>TestSuite<cr>", desc = "Whole Test Suite" },
+    ["<leader>Tf"] = { "<cmd>TestFile<cr>", desc = "Current File" },
+    ["<leader>Te"] = { "<cmd>TestEdit<cr>", desc = "Edit Current File" },
+    ["<leader>Tl"] = { "<cmd>TestLast<cr>", desc = "Last" },
+    ["<leader>Tv"] = { "<cmd>TestVisit<cr>", desc = "Visit Last" },
+    ["<leader>Ti"] = { "<cmd>TestInfo<cr>", desc = "Plugin Info" },
     ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
