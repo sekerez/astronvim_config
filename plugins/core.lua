@@ -27,6 +27,10 @@ return {
       })
     end,
   },
+  {
+    "onsails/lspkind.nvim",
+    config = function(_, opts) opts.symbol_map.Copilot = "" end,
+  },
   -- You can disable default plugins as follows:
   { "null-ls", enabled = false },
   --
