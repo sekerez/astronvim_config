@@ -8,7 +8,16 @@ return {
     "zbirenbaum/copilot.lua",
     cmd = { "Copilot" },
     event = { "InsertEnter" },
-    config = function() require("copilot").setup {} end,
+    config = function()
+      require("copilot").setup {
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      }
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function() require("copilot_cmp").setup() end,
   },
   {
     "stevearc/conform.nvim",
@@ -22,11 +31,15 @@ return {
         yaml = { "yamlfix" },
         json = { "fixjson" },
         zig = { "zigfmt" },
-        sql = { "sql-formatter" },
+        sql = { "pg_format" },
+        go = { "gofmt", "golines" },
       },
       formatters = {
         black = {
           prepend_args = { "--fast" },
+        },
+        golines = {
+          prepend_args = { "-m", "120", "-t", "2" },
         },
       },
       -- format_on_save = function(bufnr)
@@ -49,7 +62,12 @@ return {
     --   { "<leader>T" },
     -- },
     event = { "BufEnter *test*" },
-    config = function() require("nvim-test").setup {} end,
+    config = function() require("nvim-test").setup { silent = true } end,
+  },
+  {
+    "leoluz/nvim-dap-go",
+    dependencies = "nvim-dap",
+    config = function() require("dap-go").setup() end,
   },
   -- "andweeb/presence.nvim",
   -- {

@@ -13,50 +13,64 @@ return {
     palettes = {
       astrodark = {
         term = {
-          -- black = "#000000",
-          -- lightblack = "#000000",
+          black = "#000000",
+          white = "#FFFFFF",
+          blue = "#2196F3",
+          cyan = "#00FFFF",
+          green = "#39DD14",
+          purple = "#963DFF",
+          red = "#FF0000",
+          yellow = "#FFFF55",
           background = "#000000",
         },
         ui = {
           base = "#000000",
---           text = greenish,
---           accent = greenish,
---           green = greenish,
---           -- blue = greenish,
---           current_line = "#000000",
+          black = "#000000",
+          white = "#FFFFFF",
+          blue = "#2196F3",
+          cyan = "#00FFFF",
+          green = "#39DD14",
+          purple = "#963DFF",
+          red = "#FF0000",
+          yellow = "#FFFF55",
+          --           text = greenish,
+          --           accent = greenish,
+          --           green = greenish,
+          --           -- blue = greenish,
+          --           current_line = "#000000",
         },
---         syntax = {
---           green = greenish,
---           -- blue = greenish,
---         },
+        --         syntax = {
+        --           green = greenish,
+        --           -- blue = greenish,
+        --         },
       },
---       -- c.ui.blue = "#50A4E9""#50A4E9"
+      --       -- c.ui.blue = "#50A4E9""#50A4E9"
     },
---     highlights = {
---       astrodark = {
---         -- modify_hl_groups = function(hl, c)
---         --   -- hl.String.italic = true
---         --   hl.StatusNormal.bg = c.ui.green
---         --   -- hl.Label.fg = c.syntax.green
---         --   -- hl.Function.fg = c.syntax.green
---         --   -- hl.Type.fg = c.syntax.green
---         --   -- hl.Special.fg = c.syntax.green
---         --   -- hl.PreCondit.fg = c.syntax.green
---         --   -- hl.StorageClass.fg = c.syntax.green
---         --   -- hl.Type.fg = c.syntax.green
---         --   -- hl.Special.fg = c.syntax.green
---         --   hl.DashboardCenter.fg = c.syntax.green
---         --   hl.DashboardShortcut.fg = c.syntax.green
---         --   hl.DashboardFooter.fg = c.syntax.green
---         --
---         --   hl.TelescopePromptTitle.fg = c.syntax.green
---         --   hl.TelescopeResultsTitle.fg = c.syntax.green
---         --   hl.TelescopePreviewTitle.fg = c.syntax.green
---         --   hl.TelescopeMultiSelection.fg = c.syntax.green
---         --   hl.TelescopeMultiIcon.fg = c.syntax.green
---         -- end,
---       },
---     },
+    --     highlights = {
+    --       astrodark = {
+    --         -- modify_hl_groups = function(hl, c)
+    --         --   -- hl.String.italic = true
+    --         --   hl.StatusNormal.bg = c.ui.green
+    --         --   -- hl.Label.fg = c.syntax.green
+    --         --   -- hl.Function.fg = c.syntax.green
+    --         --   -- hl.Type.fg = c.syntax.green
+    --         --   -- hl.Special.fg = c.syntax.green
+    --         --   -- hl.PreCondit.fg = c.syntax.green
+    --         --   -- hl.StorageClass.fg = c.syntax.green
+    --         --   -- hl.Type.fg = c.syntax.green
+    --         --   -- hl.Special.fg = c.syntax.green
+    --         --   hl.DashboardCenter.fg = c.syntax.green
+    --         --   hl.DashboardShortcut.fg = c.syntax.green
+    --         --   hl.DashboardFooter.fg = c.syntax.green
+    --         --
+    --         --   hl.TelescopePromptTitle.fg = c.syntax.green
+    --         --   hl.TelescopeResultsTitle.fg = c.syntax.green
+    --         --   hl.TelescopePreviewTitle.fg = c.syntax.green
+    --         --   hl.TelescopeMultiSelection.fg = c.syntax.green
+    --         --   hl.TelescopeMultiIcon.fg = c.syntax.green
+    --         -- end,
+    --       },
+    --     },
   },
 }
 -- ---@class AstroThemePalette
