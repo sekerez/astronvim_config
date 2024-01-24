@@ -16,13 +16,13 @@ local mappings = {
     ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
     -- Testing
     ["<leader>T"] = { desc = "󰙨 Test" },
-    ["<leader>Tn"] = { "<cmd>TestNearest<cr>", desc = "Nearest" },
-    ["<leader>Ts"] = { "<cmd>TestSuite<cr>", desc = "Whole Test Suite" },
-    ["<leader>Tf"] = { "<cmd>TestFile<cr>", desc = "Current File" },
-    ["<leader>Te"] = { "<cmd>TestEdit<cr>", desc = "Edit Current File" },
-    ["<leader>Tl"] = { "<cmd>TestLast<cr>", desc = "Last" },
-    ["<leader>Tv"] = { "<cmd>TestVisit<cr>", desc = "Visit Last" },
-    ["<leader>Ti"] = { "<cmd>TestInfo<cr>", desc = "Plugin Info" },
+    ["<leader>Tn"] = { function() require("neotest").run.run() end, desc = "Nearest" },
+    ["<leader>Tf"] = { function() require("neotest").run.run(vim.fn.expand "%") end, desc = "File" },
+    ["<leader>Ts"] = { function() require("neotest").run.stop() end, desc = "Stop" },
+    ["<leader>Ta"] = { function() require("neotest").run.attach() end, desc = "Attach" },
+    ["<leader>Td"] = { function() require("neotest").run.run { strategy = "dap" } end, desc = "Debug" },
+    ["<leader>Tw"] = { function() require("neotest").run.run(vim.fn.getcwd()) end, desc = "Whole Suite" },
+
     ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
     -- Debugger
     ["<leader>dt"] = { function() require("dap-go").debug_test() end, desc = "Test Nearest" },

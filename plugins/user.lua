@@ -58,12 +58,32 @@ return {
     },
   },
   {
-    "klen/nvim-test",
-    -- keys = {
-    --   { "<leader>T" },
-    -- },
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-neotest/neotest-go",
+    },
     event = { "BufEnter *test*" },
-    config = function() require("nvim-test").setup { silent = true } end,
+    config = function(_, opts) -- get neotest namespace (api call creates or returns namespace)
+      local neotest_ns = vim.api.nvim_create_namespace "neotest"
+      vim.diagnostic.config({
+        virtual_text = {
+          format = function(diagnostic)
+            local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+            return message
+          end,
+        },
+      }, neotest_ns)
+      opts.adapters = opts.adapters or {}
+      table.insert(opts.adapters, require "neotest-go")
+      require("neotest").setup(opts)
+    end,
+  },
+  {
+    "nvim-neotest/neotest-go",
+    event = { "BufEnter *test.go" },
   },
   {
     "leoluz/nvim-dap-go",
