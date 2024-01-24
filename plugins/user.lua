@@ -67,6 +67,7 @@ return {
   {
     "leoluz/nvim-dap-go",
     dependencies = "nvim-dap",
+    event = { "BufEnter *test.go" },
     config = function() require("dap-go").setup() end,
   },
   -- "andweeb/presence.nvim",

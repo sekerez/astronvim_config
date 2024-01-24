@@ -11,15 +11,10 @@ local mappings = {
     ["H"] = { "<cmd>bprev<cr>" },
     ["<leader>v"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" },
     ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
-    ["<leader>bc"] = {
-      "<cmd>BufferLinePickClose<cr>",
-      desc = "Pick to close",
-    },
+    ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
     ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
-    ["<leader>bt"] = {
-      "<cmd>BufferLineSortByTabs<cr>",
-      desc = "Sort by tabs",
-    },
+    ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
+    -- Testing
     ["<leader>T"] = { desc = "󰙨 Test" },
     ["<leader>Tn"] = { "<cmd>TestNearest<cr>", desc = "Nearest" },
     ["<leader>Ts"] = { "<cmd>TestSuite<cr>", desc = "Whole Test Suite" },
@@ -29,6 +24,9 @@ local mappings = {
     ["<leader>Tv"] = { "<cmd>TestVisit<cr>", desc = "Visit Last" },
     ["<leader>Ti"] = { "<cmd>TestInfo<cr>", desc = "Plugin Info" },
     ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
+    -- Debugger
+    ["<leader>dt"] = { function() require("dap-go").debug_test() end, desc = "Test Nearest" },
+    ["<leader>dl"] = { function() require("dap-go").debug_last_test() end, desc = "Test Last" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },
