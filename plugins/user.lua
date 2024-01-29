@@ -80,6 +80,18 @@ return {
       table.insert(opts.adapters, require "neotest-go")
       require("neotest").setup(opts)
     end,
+    keys = {
+      { "<leader>m", desc = "󰙨 Test" },
+      { "<leader>mn", function() require("neotest").run.run() end, desc = "Nearest" },
+      { "<leader>mf", function() require("neotest").run.run(vim.fn.expand "%") end, desc = "File" },
+      { "<leader>ms", function() require("neotest").summary.toggle() end, desc = "Summary" },
+      { "<leader>mx", function() require("neotest").run.stop() end, desc = "Stop" },
+      { "<leader>ma", function() require("neotest").run.attach() end, desc = "Attach" },
+      { "<leader>md", function() require("neotest").run.run { strategy = "dap" } end, desc = "Debug" },
+      { "<leader>mo", function() require("neotest").output.open() end, desc = "Output" },
+      { "<leader>mO", function() require("neotest").output_panel.open() end, desc = "Output Panel" },
+      { "<leader>mw", function() require("neotest").run.run(vim.fn.getcwd()) end, desc = "Whole Suite" },
+    },
   },
   {
     "nvim-neotest/neotest-go",
@@ -90,6 +102,10 @@ return {
     dependencies = "nvim-dap",
     event = { "BufEnter *test.go" },
     config = function() require("dap-go").setup() end,
+    keys = {
+      { "<leader>dt", function() require("dap-go").debug_test() end, desc = "Test Nearest" },
+      { "<leader>dl", function() require("dap-go").debug_last_test() end, desc = "Test Last" },
+    },
   },
   {
     "ThePrimeagen/refactoring.nvim",

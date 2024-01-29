@@ -10,25 +10,7 @@ local mappings = {
     ["L"] = { "<cmd>bnext<cr>" },
     ["H"] = { "<cmd>bprev<cr>" },
     ["<leader>v"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" },
-    ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
-    ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
-    ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
-    ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
-    -- Testing
-    ["<leader>T"] = { desc = "󰙨 Test" },
-    ["<leader>Tn"] = { function() require("neotest").run.run() end, desc = "Nearest" },
-    ["<leader>Tf"] = { function() require("neotest").run.run(vim.fn.expand "%") end, desc = "File" },
-    ["<leader>Ts"] = { function() require("neotest").run.stop() end, desc = "Stop" },
-    ["<leader>Ta"] = { function() require("neotest").run.attach() end, desc = "Attach" },
-    ["<leader>Td"] = { function() require("neotest").run.run { strategy = "dap" } end, desc = "Debug" },
-    ["<leader>Tw"] = { function() require("neotest").run.run(vim.fn.getcwd()) end, desc = "Whole Suite" },
-
     ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
-    -- Debugger
-    ["<leader>dt"] = { function() require("dap-go").debug_test() end, desc = "Test Nearest" },
-    ["<leader>dl"] = { function() require("dap-go").debug_last_test() end, desc = "Test Last" },
-    -- quick save
-    -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },
   t = {
     ["<esc>"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
