@@ -33,6 +33,7 @@ return {
         zig = { "zigfmt" },
         sql = { "pg_format" },
         go = { "gofmt", "golines" },
+        typescript = { "eslint_d" },
       },
       formatters = {
         black = {
@@ -69,6 +70,19 @@ return {
     dependencies = "nvim-dap",
     event = { "BufEnter *test.go" },
     config = function() require("dap-go").setup() end,
+  },
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    event = { "BufEnter" },
+    config = function(_, opts)
+      opts.prompt_func_return_type = { go = true }
+      opts.prompt_func_param_type = { go = true }
+      require("refactoring").setup(opts)
+    end,
   },
   -- "andweeb/presence.nvim",
   -- {
