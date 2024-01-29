@@ -66,7 +66,7 @@ return {
       "nvim-neotest/neotest-go",
     },
     event = { "BufEnter *test*" },
-    config = function(_, opts) -- get neotest namespace (api call creates or returns namespace)
+    config = function()
       local neotest_ns = vim.api.nvim_create_namespace "neotest"
       vim.diagnostic.config({
         virtual_text = {
@@ -76,9 +76,11 @@ return {
           end,
         },
       }, neotest_ns)
-      opts.adapters = opts.adapters or {}
-      table.insert(opts.adapters, require "neotest-go")
-      require("neotest").setup(opts)
+      require("neotest").setup {
+        adapters = {
+          require "neotest-go",
+        },
+      }
     end,
     keys = {
       { "<leader>m", desc = "Test" },
@@ -87,9 +89,8 @@ return {
       { "<leader>ms", function() require("neotest").summary.toggle() end, desc = "Summary" },
       { "<leader>mx", function() require("neotest").run.stop() end, desc = "Stop" },
       { "<leader>ma", function() require("neotest").run.attach() end, desc = "Attach" },
-      { "<leader>md", function() require("neotest").run.run { strategy = "dap" } end, desc = "Debug" },
       { "<leader>mo", function() require("neotest").output.open() end, desc = "Output" },
-      { "<leader>mO", function() require("neotest").output_panel.open() end, desc = "Output Panel" },
+      { "<leader>mO", function() require("neotest").output_panel.toggle() end, desc = "Output Panel" },
       { "<leader>mw", function() require("neotest").run.run(vim.fn.getcwd()) end, desc = "Whole Suite" },
     },
   },
@@ -103,8 +104,8 @@ return {
     event = { "BufEnter *test.go" },
     config = function() require("dap-go").setup() end,
     keys = {
-      { "<leader>dt", function() require("dap-go").debug_test() end, desc = "Test Nearest" },
-      { "<leader>dl", function() require("dap-go").debug_last_test() end, desc = "Test Last" },
+      { "<leader>dt", ft = "go", function() require("dap-go").debug_test() end, desc = "Test Nearest" },
+      { "<leader>dl", ft = "go", function() require("dap-go").debug_last_test() end, desc = "Test Last" },
     },
   },
   {
@@ -120,18 +121,53 @@ return {
       require("refactoring").setup(opts)
     end,
     keys = {
-      { "<leader>r", desc = "Refactor" },
-      { "<leader>re", desc = "Extract" },
-      { "<leader>ref", function() require("refactoring").refactor "Extract Function" end, desc = "Extract Function" },
-      { "<leader>rev", function() require("refactoring").refactor "Extract Variable" end, desc = "Extract Variable" },
-      { "<leader>reb", function() require("refactoring").refactor "Extract Block" end, desc = "Extract Block" },
-      { "<leader>ri", desc = "Inline" },
-      { "<leader>rif", function() require("refactoring").refactor "Inline Function" end, desc = "Inline Function" },
-      { "<leader>riv", function() require("refactoring").refactor "Inline Variable" end, desc = "Inline Variable" },
-      { "<leader>rib", function() require("refactoring").refactor "Inline Block" end, desc = "Inline Block" },
-      { "<leader>rp", desc = "Print" },
-      { "<leader>rpv", function() require("refactoring").refactor "Print Variable" end, desc = "Print Variable" },
-      { "<leader>rpc", function() require("refactoring").refactor "Clean" end, desc = "Clean" },
+      { "<leader>r", desc = "Refactor", mode = "v" },
+      { "<leader>re", desc = "Extract", mode = "v" },
+      {
+        "<leader>ref",
+        function() require("refactoring").refactor "Extract Function" end,
+        desc = "Extract Function",
+        mode = "v",
+      },
+      {
+        "<leader>rev",
+        function() require("refactoring").refactor "Extract Variable" end,
+        desc = "Extract Variable",
+        mode = "v",
+      },
+      {
+        "<leader>reb",
+        function() require("refactoring").refactor "Extract Block" end,
+        desc = "Extract Block",
+        mode = "v",
+      },
+      { "<leader>ri", desc = "Inline", mode = "v" },
+      {
+        "<leader>rif",
+        function() require("refactoring").refactor "Inline Function" end,
+        desc = "Inline Function",
+        mode = "v",
+      },
+      {
+        "<leader>riv",
+        function() require("refactoring").refactor "Inline Variable" end,
+        desc = "Inline Variable",
+        mode = "v",
+      },
+      {
+        "<leader>rib",
+        function() require("refactoring").refactor "Inline Block" end,
+        desc = "Inline Block",
+        mode = "v",
+      },
+      { "<leader>rp", desc = "Print", mode = "v" },
+      {
+        "<leader>rpv",
+        function() require("refactoring").refactor "Print Variable" end,
+        desc = "Print Variable",
+        mode = "v",
+      },
+      { "<leader>rpc", function() require("refactoring").refactor "Clean" end, desc = "Clean", mode = "v" },
     },
   },
   -- "andweeb/presence.nvim",
