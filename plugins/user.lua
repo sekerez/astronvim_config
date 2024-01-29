@@ -81,7 +81,7 @@ return {
       require("neotest").setup(opts)
     end,
     keys = {
-      { "<leader>m", desc = "󰙨 Test" },
+      { "<leader>m", desc = "Test" },
       { "<leader>mn", function() require("neotest").run.run() end, desc = "Nearest" },
       { "<leader>mf", function() require("neotest").run.run(vim.fn.expand "%") end, desc = "File" },
       { "<leader>ms", function() require("neotest").summary.toggle() end, desc = "Summary" },
@@ -119,6 +119,20 @@ return {
       opts.prompt_func_param_type = { go = true }
       require("refactoring").setup(opts)
     end,
+    keys = {
+      { "<leader>r", desc = "Refactor" },
+      { "<leader>re", desc = "Extract" },
+      { "<leader>ref", function() require("refactoring").refactor "Extract Function" end, desc = "Extract Function" },
+      { "<leader>rev", function() require("refactoring").refactor "Extract Variable" end, desc = "Extract Variable" },
+      { "<leader>reb", function() require("refactoring").refactor "Extract Block" end, desc = "Extract Block" },
+      { "<leader>ri", desc = "Inline" },
+      { "<leader>rif", function() require("refactoring").refactor "Inline Function" end, desc = "Inline Function" },
+      { "<leader>riv", function() require("refactoring").refactor "Inline Variable" end, desc = "Inline Variable" },
+      { "<leader>rib", function() require("refactoring").refactor "Inline Block" end, desc = "Inline Block" },
+      { "<leader>rp", desc = "Print" },
+      { "<leader>rpv", function() require("refactoring").refactor "Print Variable" end, desc = "Print Variable" },
+      { "<leader>rpc", function() require("refactoring").refactor "Clean" end, desc = "Clean" },
+    },
   },
   -- "andweeb/presence.nvim",
   -- {
