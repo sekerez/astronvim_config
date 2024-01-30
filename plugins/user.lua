@@ -1,9 +1,4 @@
--- local slow_format_filetypes = {}
-
 return {
-  -- You can also add new plugins here as well:
-  -- Add plugins, the lazy syntax
-  -- { "aduros/ai.vim" },
   {
     "zbirenbaum/copilot.lua",
     cmd = { "Copilot" },
@@ -84,8 +79,9 @@ return {
     end,
     keys = {
       { "<leader>m", desc = "Test" },
-      { "<leader>mn", function() require("neotest").run.run() end, desc = "Nearest" },
-      { "<leader>mf", function() require("neotest").run.run(vim.fn.expand "%") end, desc = "File" },
+      { "<leader>mn", function() require("neotest").run.run() end, desc = "Run Nearest" },
+      { "<leader>ml", function() require("neotest").run.run_last() end, desc = "Run Last" },
+      { "<leader>mf", function() require("neotest").run.run(vim.fn.expand "%") end, desc = "Run File" },
       { "<leader>ms", function() require("neotest").summary.toggle() end, desc = "Summary" },
       { "<leader>mx", function() require("neotest").run.stop() end, desc = "Stop" },
       { "<leader>ma", function() require("neotest").run.attach() end, desc = "Attach" },
@@ -121,61 +117,83 @@ return {
       require("refactoring").setup(opts)
     end,
     keys = {
-      { "<leader>r", desc = "Refactor", mode = "v" },
-      { "<leader>re", desc = "Extract", mode = "v" },
+      { "<leader>r", desc = "Refactor", mode = { "v", "x", "n" } },
+      { "<leader>re", desc = "Extract", mode = { "v", "x", "n" } },
       {
         "<leader>ref",
         function() require("refactoring").refactor "Extract Function" end,
         desc = "Extract Function",
-        mode = "v",
+        mode = { "v", "x" },
       },
       {
         "<leader>rev",
         function() require("refactoring").refactor "Extract Variable" end,
         desc = "Extract Variable",
-        mode = "v",
+        mode = { "v", "x" },
       },
       {
         "<leader>reb",
         function() require("refactoring").refactor "Extract Block" end,
         desc = "Extract Block",
-        mode = "v",
+        mode = { "v", "x" },
       },
-      { "<leader>ri", desc = "Inline", mode = "v" },
+      { "<leader>ri", desc = "Inline", mode = { "v", "x" } },
       {
         "<leader>rif",
         function() require("refactoring").refactor "Inline Function" end,
         desc = "Inline Function",
-        mode = "v",
+        mode = { "v", "x" },
       },
       {
         "<leader>riv",
         function() require("refactoring").refactor "Inline Variable" end,
         desc = "Inline Variable",
-        mode = "v",
+        mode = { "v", "x" },
       },
       {
         "<leader>rib",
         function() require("refactoring").refactor "Inline Block" end,
         desc = "Inline Block",
-        mode = "v",
+        mode = { "v", "x" },
       },
-      { "<leader>rp", desc = "Print", mode = "v" },
+      { "<leader>rp", desc = "Print", mode = { "v", "x" } },
       {
         "<leader>rpv",
         function() require("refactoring").refactor "Print Variable" end,
         desc = "Print Variable",
-        mode = "v",
+        mode = { "v", "x" },
       },
-      { "<leader>rpc", function() require("refactoring").refactor "Clean" end, desc = "Clean", mode = "v" },
+      { "<leader>rpc", function() require("refactoring").refactor "Clean" end, desc = "Clean", mode = { "v", "x" } },
     },
   },
-  -- "andweeb/presence.nvim",
-  -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   event = "BufRead",
-  --   config = function()
-  --     require("lsp_signature").setup()
-  --   end,
-  -- },
+  {
+    "ruifm/gitlinker.nvim",
+    event = { "BufEnter" },
+    requires = { "nvim-lua/plenary.nvim" },
+    -- config = function() require("gitlinker").setup { mappings = nil } end,
+    keys = {
+      { "<leader>gy", function() require("gitlinker").get_buf_range_url "n" end, desc = "Yank Link" },
+      { "<leader>gy", function() require("gitlinker").get_buf_range_url "v" end, mode = { "v" }, desc = "Yank Link" },
+      {
+        "<leader>go",
+        function()
+          require("gitlinker").get_buf_range_url(
+            "n",
+            { action_callback = require("gitlinker.actions").open_in_browser }
+          )
+        end,
+        desc = "Open Link",
+      },
+    },
+  },
+  {
+    "pwntester/octo.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    event = { "BufEnter" },
+    config = function() require("octo").setup() end,
+  },
 }
