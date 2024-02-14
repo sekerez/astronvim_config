@@ -1,8 +1,23 @@
 return {
   {
+    "ggandor/leap.nvim",
+    lazy = false,
+    config = function() require("leap").create_default_mappings() end,
+  },
+  {
+    "ellisonleao/dotenv.nvim",
+    lazy = false,
+    config = function()
+      require("dotenv").setup {
+        enable_on_load = true, -- will load your .env file upon loading a buffer
+        verbose = false, -- show error notification if .env file is not found and if .env is loaded
+      }
+    end,
+  },
+  {
     "zbirenbaum/copilot.lua",
     cmd = { "Copilot" },
-    event = { "InsertEnter" },
+    event = { "BufEnter" },
     config = function()
       require("copilot").setup {
         suggestion = { enabled = false },
@@ -23,11 +38,11 @@ return {
         lua = { "stylua" },
         python = { "black" },
         javascript = { "prettier" },
-        yaml = { "yamlfix" },
-        json = { "fixjson" },
+        yaml = { "yamllint" },
+        json = { "fixjson", "eslint_d" },
         zig = { "zigfmt" },
         sql = { "pg_format" },
-        go = { "gofmt", "golines" },
+        go = { "gofumpt", "golines" },
         typescript = { "eslint_d" },
       },
       formatters = {
@@ -100,8 +115,16 @@ return {
     event = { "BufEnter *test.go" },
     config = function() require("dap-go").setup() end,
     keys = {
-      { "<leader>dt", ft = "go", function() require("dap-go").debug_test() end, desc = "Test Nearest" },
-      { "<leader>dl", ft = "go", function() require("dap-go").debug_last_test() end, desc = "Test Last" },
+      { "<leader>dt", function() require("dap-go").debug_test() end, desc = "Test Nearest" },
+      { "<leader>dl", function() require("dap-go").debug_last_test() end, desc = "Test Last" },
+    },
+  },
+  {
+    "jbyuki/one-small-step-for-vimkind",
+    dependencies = "nvim-dap",
+    event = { "BufEnter *.lua" },
+    keys = {
+      { "<leader>dL", function() require("osv").launch { port = 8086 } end, desc = "Launch OSV server" },
     },
   },
   {
@@ -193,7 +216,6 @@ return {
       "nvim-telescope/telescope.nvim",
       "nvim-tree/nvim-web-devicons",
     },
-    event = { "BufEnter" },
     config = function() require("octo").setup() end,
   },
 }

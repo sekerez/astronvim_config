@@ -10,11 +10,11 @@ local mappings = {
     ["L"] = { "<cmd>bnext<cr>" },
     ["H"] = { "<cmd>bprev<cr>" },
     ["<leader>v"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" },
-    ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
+    ["<c-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
+    ["gf"] = { "gF", desc = "Go to file under cursor" },
   },
   t = {
     ["<esc>"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
-    ["<C-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
   },
 }
 
