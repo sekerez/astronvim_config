@@ -37,7 +37,7 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         python = { "black" },
-        javascript = { "prettier" },
+        javascript = { "eslint_d" },
         yaml = { "yamllint" },
         json = { "fixjson", "eslint_d" },
         zig = { "zigfmt" },
