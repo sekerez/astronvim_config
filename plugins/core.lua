@@ -2,6 +2,23 @@ return {
   -- TODO: Add the Leap plugin
   -- customize alpha options
   {
+    "nvim-dap",
+    config = function()
+      local dap = require "dap"
+      dap.configurations.lua = {
+        {
+          type = "nlua",
+          request = "attach",
+          name = "Attach to running Neovim instance",
+        },
+      }
+
+      dap.adapters.nlua = function(callback, config)
+        callback { type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 }
+      end
+    end,
+  },
+  {
     "nvim-cmp",
     dependencies = {
       {
@@ -28,8 +45,20 @@ return {
     end,
   },
   {
+    "akinsho/toggleterm.nvim",
+    opts = { open_mapping = [[<c-\>]] },
+    keys = {
+      {
+        "<leader>t",
+        function() require("toggleterm").send_lines_to_terminal("single_line", true, { args = vim.v.count }) end,
+        desc = "Send to Terminal",
+        mode = { "v", "x" },
+      },
+    },
+  },
+  {
     "onsails/lspkind.nvim",
-    config = function(_, opts) opts.symbol_map.Copilot = "" end,
+    opts = { symbol_map = { Copilot = "" } },
   },
   -- You can disable default plugins as follows:
   { "null-ls", enabled = false },
