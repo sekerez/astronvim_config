@@ -1,3 +1,7 @@
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  command = "setlocal shiftwidth=8 tabstop=8",
+})
 -- set vim options here (vim.<first_key>.<second_key> = value)
 return {
   opt = {
@@ -7,8 +11,8 @@ return {
     spell = false, -- sets vim.opt.spell
     signcolumn = "auto", -- sets vim.opt.signcolumn to auto
     wrap = true, -- sets vim.opt.wrap
-    tabstop = 8,
-    shiftwidth = 8,
+    -- tabstop = 8,
+    -- shiftwidth = 8,
     -- cmdheight = 1,
   },
   g = {
