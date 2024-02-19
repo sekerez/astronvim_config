@@ -1,3 +1,20 @@
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("LspAttach_inlayhints", {}),
+  callback = function(args)
+    if not (args.data and args.data.client_id) then return end
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client.server_capabilities.inlayHintProvider then
+      local inlayhints = require "lsp-inlayhints"
+      inlayhints.on_attach(client, args.buf)
+      require("astronvim.utils").set_mappings({
+        n = {
+          ["<leader>uH"] = { inlayhints.toggle, desc = "Toggle inlay hints" },
+        },
+      }, { buffer = args.buf })
+    end
+  end,
+})
+
 return {
   {
     "ggandor/leap.nvim",
@@ -190,32 +207,16 @@ return {
     },
   },
   {
-    "ruifm/gitlinker.nvim",
-    event = { "BufEnter" },
-    requires = { "nvim-lua/plenary.nvim" },
-    -- config = function() require("gitlinker").setup { mappings = nil } end,
-    keys = {
-      { "<leader>gy", function() require("gitlinker").get_buf_range_url "n" end, desc = "Yank Link" },
-      { "<leader>gy", function() require("gitlinker").get_buf_range_url "v" end, mode = { "v" }, desc = "Yank Link" },
-      {
-        "<leader>go",
-        function()
-          require("gitlinker").get_buf_range_url(
-            "n",
-            { action_callback = require("gitlinker.actions").open_in_browser }
-          )
-        end,
-        desc = "Open Link",
-      },
-    },
+    "lvimuser/lsp-inlayhints.nvim",
+    config = function() require("lsp-inlayhints").setup() end,
+    opts = {},
   },
   {
-    "pwntester/octo.nvim",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "nvim-tree/nvim-web-devicons",
+    "zeioth/garbage-day.nvim",
+    dependencies = "neovim/nvim-lspconfig",
+    event = "VeryLazy",
+    opts = {
+      -- your options here
     },
-    config = function() require("octo").setup() end,
   },
 }

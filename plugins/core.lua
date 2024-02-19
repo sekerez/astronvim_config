@@ -60,8 +60,14 @@ return {
     "onsails/lspkind.nvim",
     opts = { symbol_map = { Copilot = "" } },
   },
+  {
+    "nmac427/guess-indent.nvim",
+    opts = { filetype_exclude = { "go" } },
+  },
   -- You can disable default plugins as follows:
   { "null-ls", enabled = false },
+  { "null-ls.nvim", enabled = false },
+  { "mason-null-ls.nvim", enabled = false },
   --
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   -- {
