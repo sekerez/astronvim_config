@@ -6,7 +6,19 @@ return {
 
   -- == Examples of Adding Plugins ==
 
-  "andweeb/presence.nvim",
+  -- {
+  --   "nvimdev/lspsaga.nvim",
+  --   config = function()
+  --     local get_icon = require("astroui.utils").get_icon
+  --     require("lspsaga").setup {
+  --       ui = {
+  --         code_action_icon = get_icon "lightbulb",
+  --       },
+  --     }
+  --   end,
+  --   event = "LspAttach",
+  --   dependencies = { "nvim-treesitter/nvim-treesitter" },
+  -- },
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
