@@ -98,7 +98,8 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    event = { "BufEnter *.ts*" },
+    lazy = false,
+    -- event = { "BufEnter *.ts*" },
     opts = {
       settings = {
         tsserver_file_preferences = {
@@ -117,6 +118,33 @@ return {
         },
       },
     },
+
+    -- TSToolsOrganizeImports - sorts and removes unused imports
+    -- TSToolsSortImports - sorts imports
+    -- TSToolsRemoveUnusedImports - removes unused imports
+    -- TSToolsRemoveUnused - removes all unused statements
+    -- TSToolsAddMissingImports - adds imports for all statements that lack one and can be imported
+    -- TSToolsFixAll - fixes all fixable errors
+    -- TSToolsGoToSourceDefinition - goes to source definition (available since TS v4.7)
+    -- TSToolsRenameFile - allow to rename current file and apply changes to connected files
+    -- TSToolsFileReferences - find files that reference the current file (available since TS v4.2)
+    keys = {
+      { "<leader>lT", name = "Typescript Tools", desc = "Typescript Tools" },
+      { "<leader>lTo", "<cmd>TSToolsOrganizeImports<CR>", desc = "Organize Imports" },
+      { "<leader>lTs", "<cmd>TSToolsSortImports<CR>", desc = "Sort Imports" },
+      { "<leader>lTX", "<cmd>TSToolsRemoveUnusedImports<CR>", desc = "Remove Unused Imports" },
+      { "<leader>lTx", "<cmd>TSToolsRemoveUnused<CR>", desc = "Remove Unused Statements" },
+      { "<leader>lTa", "<cmd>TSToolsAddMissingImports<CR>", desc = "Add Missing Imports" },
+      { "<leader>lTf", "<cmd>TSToolsFixAll<CR>", desc = "Fix All Errors" },
+      { "<leader>lTd", "<cmd>TSToolsGoToSourceDefinition<CR>", desc = "Source Definition" },
+      { "<leader>lTr", "<cmd>TSToolsRenameFile<CR>", desc = "Rename File" },
+      { "<leader>lTF", "<cmd>TSToolsFileReferences<CR>", desc = "Find File References" },
+    },
+  },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^4", -- Recommended
+    lazy = false, -- This plugin is already lazy
   },
   -- == Examples of Overriding Plugins ==
 
