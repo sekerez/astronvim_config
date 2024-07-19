@@ -40,15 +40,27 @@ return {
     servers = {
       "gleam",
       "typescript-tools",
+      -- "rust_analyzer",
       -- "pyright"
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      -- rust_analyzer = {
+      --   settings = {
+      --     ["rust-analyzer"] = {
+      --       cargo = {
+      --         extraEnv = { CARGO_PROFILE_RUST_ANALYZER_INHERITS = "dev" },
+      --         extraArgs = { "--profile", "rust-analyzer" },
+      --       },
+      --     },
+      --   },
+      -- },
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
     },
     -- customize how language servers are attached
     handlers = {
+      rust_analyzer = function(_, opts) require "rustaceanvim" end,
       -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
       -- function(server, opts) require("lspconfig")[server].setup(opts) end
 
@@ -89,6 +101,42 @@ return {
           function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
           desc = "Toggle inlay hints",
         },
+        gd = {
+          function() require("telescope.builtin").lsp_definitions { show_line = false, reuse_win = true } end,
+          desc = "Go to definition",
+        },
+        gI = {
+          function() require("telescope.builtin").lsp_implementations { show_line = false, reuse_win = true } end,
+          desc = "Go to implementation",
+        },
+        gy = {
+          function() require("telescope.builtin").lsp_type_definitions { show_line = false, reuse_win = true } end,
+          desc = "Go to type definition",
+        },
+        grr = {
+          function() require("telescope.builtin").lsp_references { show_line = false, reuse_win = true } end,
+          desc = "Find references",
+        },
+        ["<Leader>lR"] = {
+          function() require("telescope.builtin").lsp_references { show_line = false, reuse_win = true } end,
+          desc = "Find references",
+        },
+        ["<Leader>lG"] = {
+          function()
+            vim.ui.input({ prompt = "Symbol Query: (leave empty for word under cursor)" }, function(query)
+              if query then
+                -- word under cursor if given query is empty
+                if query == "" then query = vim.fn.expand "<cword>" end
+                require("telescope.builtin").lsp_workspace_symbols {
+                  query = query,
+                  prompt_title = ("Find word (%s)"):format(query),
+                }
+              end
+            end)
+          end,
+          desc = "Search Workslack Symbols",
+        },
+
         -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
         -- gD = {
         --   function() vim.lsp.buf.declaration() end,

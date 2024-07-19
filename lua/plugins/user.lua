@@ -239,6 +239,7 @@ return {
         typescriptreact = { "eslint_d" },
         -- tsx = { "eslint_d" },
         terraform = { "terraform_fmt" },
+        rust = { "rustfmt" },
       },
       formatters = {
         black = {
@@ -284,6 +285,7 @@ return {
       require("neotest").setup {
         adapters = {
           require "neotest-go",
+          require "rustaceanvim.neotest",
         },
       }
     end,
