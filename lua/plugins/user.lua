@@ -24,77 +24,77 @@ return {
     event = "BufRead",
     opts = { hint_enable = false },
   },
-  {
-    "willothy/flatten.nvim",
-    config = true,
-    -- or pass configuration with
-    -- opts = {  }
-    -- Ensure that it runs first to minimize delay when opening file from terminal
-    opts = function()
-      ---@type Terminal?
-      local saved_terminal
-
-      return {
-        window = {
-          open = "alternate",
-        },
-        callbacks = {
-          should_block = function(argv)
-            -- Note that argv contains all the parts of the CLI command, including
-            -- Neovim's path, commands, options and files.
-            -- See: :help v:argv
-
-            -- In this case, we would block if we find the `-b` flag
-            -- This allows you to use `nvim -b file1` instead of
-            -- `nvim --cmd 'let g:flatten_wait=1' file1`
-            return vim.tbl_contains(argv, "-b")
-
-            -- Alternatively, we can block if we find the diff-mode option
-            -- return vim.tbl_contains(argv, "-d")
-          end,
-          pre_open = function()
-            local term = require "toggleterm.terminal"
-            local termid = term.get_focused_id()
-            saved_terminal = term.get(termid)
-          end,
-          post_open = function(bufnr, winnr, ft, is_blocking)
-            if is_blocking and saved_terminal then
-              -- Hide the terminal while it's blocking
-              saved_terminal:close()
-            else
-              -- If it's a normal file, just switch to its window
-              vim.api.nvim_set_current_win(winnr)
-
-              -- If we're in a different wezterm pane/tab, switch to the current one
-              -- Requires willothy/wezterm.nvim
-              require("wezterm").switch_pane.id(tonumber(os.getenv "WEZTERM_PANE"))
-            end
-
-            -- If the file is a git commit, create one-shot autocmd to delete its buffer on write
-            -- If you just want the toggleable terminal integration, ignore this bit
-            if ft == "gitcommit" or ft == "gitrebase" then
-              vim.api.nvim_create_autocmd("BufWritePost", {
-                buffer = bufnr,
-                once = true,
-                callback = vim.schedule_wrap(function() vim.api.nvim_buf_delete(bufnr, {}) end),
-              })
-            end
-          end,
-          block_end = function()
-            -- After blocking ends (for a git commit, etc), reopen the terminal
-            vim.schedule(function()
-              if saved_terminal then
-                saved_terminal:open()
-                saved_terminal = nil
-              end
-            end)
-          end,
-        },
-      }
-    end,
-    lazy = false,
-    priority = 1001,
-  },
+  -- {
+  --   "willothy/flatten.nvim",
+  --   config = true,
+  --   -- or pass configuration with
+  --   -- opts = {  }
+  --   -- Ensure that it runs first to minimize delay when opening file from terminal
+  --   opts = function()
+  --     ---@type Terminal?
+  --     local saved_terminal
+  --
+  --     return {
+  --       window = {
+  --         open = "alternate",
+  --       },
+  --       callbacks = {
+  --         should_block = function(argv)
+  --           -- Note that argv contains all the parts of the CLI command, including
+  --           -- Neovim's path, commands, options and files.
+  --           -- See: :help v:argv
+  --
+  --           -- In this case, we would block if we find the `-b` flag
+  --           -- This allows you to use `nvim -b file1` instead of
+  --           -- `nvim --cmd 'let g:flatten_wait=1' file1`
+  --           return vim.tbl_contains(argv, "-b")
+  --
+  --           -- Alternatively, we can block if we find the diff-mode option
+  --           -- return vim.tbl_contains(argv, "-d")
+  --         end,
+  --         pre_open = function()
+  --           local term = require "toggleterm.terminal"
+  --           local termid = term.get_focused_id()
+  --           saved_terminal = term.get(termid)
+  --         end,
+  --         post_open = function(bufnr, winnr, ft, is_blocking)
+  --           if is_blocking and saved_terminal then
+  --             -- Hide the terminal while it's blocking
+  --             saved_terminal:close()
+  --           else
+  --             -- If it's a normal file, just switch to its window
+  --             vim.api.nvim_set_current_win(winnr)
+  --
+  --             -- If we're in a different wezterm pane/tab, switch to the current one
+  --             -- Requires willothy/wezterm.nvim
+  --             require("wezterm").switch_pane.id(tonumber(os.getenv "WEZTERM_PANE"))
+  --           end
+  --
+  --           -- If the file is a git commit, create one-shot autocmd to delete its buffer on write
+  --           -- If you just want the toggleable terminal integration, ignore this bit
+  --           if ft == "gitcommit" or ft == "gitrebase" then
+  --             vim.api.nvim_create_autocmd("BufWritePost", {
+  --               buffer = bufnr,
+  --               once = true,
+  --               callback = vim.schedule_wrap(function() vim.api.nvim_buf_delete(bufnr, {}) end),
+  --             })
+  --           end
+  --         end,
+  --         block_end = function()
+  --           -- After blocking ends (for a git commit, etc), reopen the terminal
+  --           vim.schedule(function()
+  --             if saved_terminal then
+  --               saved_terminal:open()
+  --               saved_terminal = nil
+  --             end
+  --           end)
+  --         end,
+  --       },
+  --     }
+  --   end,
+  --   lazy = false,
+  --   priority = 1001,
+  -- },
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -143,8 +143,20 @@ return {
   },
   {
     "mrcjkb/rustaceanvim",
-    version = "^4", -- Recommended
+    dependencies = "nvim-dap",
+    version = "^5", -- Recommended
     lazy = false, -- This plugin is already lazy
+    opts = {
+      server = {
+        default_settings = {
+          ["rust_analyzer"] = {},
+        },
+      },
+    },
+    keys = {
+      { "<leader>dt", function() vim.cmd.RustLsp "debug" end, desc = "Test Nearest" },
+      { "<leader>dl", function() vim.cmd.RustLsp { "debuggables", bang = true } end, desc = "Test Last" },
+    },
   },
   -- == Examples of Overriding Plugins ==
 
@@ -155,10 +167,12 @@ return {
   {
     "L3MON4D3/LuaSnip",
     config = function(plugin, opts)
-      require "astronvim.plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
-      -- add more custom luasnip configuration such as filetype extend or custom snippets
-      local luasnip = require "luasnip"
-      luasnip.filetype_extend("javascript", { "javascriptreact" })
+      -- include the default astronvim config that calls the setup call
+      require "astronvim.plugins.configs.luasnip"(plugin, opts)
+      -- load snippets paths
+      require("luasnip.loaders.from_vscode").lazy_load {
+        paths = { vim.fn.stdpath "config" .. "/snippets" },
+      }
     end,
   },
 
@@ -196,16 +210,16 @@ return {
     lazy = false,
     config = function() require("leap").create_default_mappings() end,
   },
-  {
-    "ellisonleao/dotenv.nvim",
-    lazy = false,
-    config = function()
-      require("dotenv").setup {
-        enable_on_load = true, -- will load your .env file upon loading a buffer
-        verbose = false, -- show error notification if .env file is not found and if .env is loaded
-      }
-    end,
-  },
+  -- {
+  --   "ellisonleao/dotenv.nvim",
+  --   lazy = false,
+  --   config = function()
+  --     require("dotenv").setup {
+  --       enable_on_load = true, -- will load your .env file upon loading a buffer
+  --       verbose = false, -- show error notification if .env file is not found and if .env is loaded
+  --     }
+  --   end,
+  -- },
   {
     "zbirenbaum/copilot.lua",
     cmd = { "Copilot" },
@@ -260,7 +274,7 @@ return {
       -- end,
 
       format_after_save = { lsp_fallback = false, timeout_ms = 1000 },
-      log_level = vim.log.levels.DEBUG,
+      -- log_level = vim.log.levels.DEBUG,
     },
   },
   {
@@ -311,6 +325,7 @@ return {
     dependencies = "nvim-dap",
     event = { "BufEnter *test.go" },
     config = function() require("dap-go").setup() end,
+    lazy = true,
     keys = {
       { "<leader>dt", function() require("dap-go").debug_test() end, desc = "Test Nearest" },
       { "<leader>dl", function() require("dap-go").debug_last_test() end, desc = "Test Last" },
@@ -390,5 +405,96 @@ return {
     "zeioth/garbage-day.nvim",
     dependencies = "neovim/nvim-lspconfig",
     event = "VeryLazy",
+  },
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      -- check the installation instructions at
+      -- https://github.com/folke/snacks.nvim
+      "folke/snacks.nvim",
+    },
+    keys = {
+      -- 👇 in this section, choose your own keymappings!
+      {
+        "<leader>-",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+      {
+        -- Open in the current working directory
+        "<leader>cw",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        "<c-up>",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume the last yazi session",
+      },
+    },
+    ---@type YaziConfig | {}
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = false,
+      keymaps = {
+        show_help = "<f1>",
+      },
+      -- the log level to use. Off by default, but can be used to diagnose
+      -- issues. You can find the location of the log file by running
+      -- `:checkhealth yazi` in Neovim. Also check out the "reproducing issues"
+      -- section below
+      -- log_level = vim.log.levels.DEBUG,
+    },
+    -- 👇 if you use `open_for_directories=true`, this is recommended
+    init = function()
+      -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
+      -- vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+    end,
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = true },
+      dashboard = { enabled = true },
+      explorer = { enabled = true },
+      indent = { enabled = true },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+    },
+  },
+  {
+    "kdheepak/lazygit.nvim",
+    lazy = true,
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurrentFile",
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+    },
   },
 }

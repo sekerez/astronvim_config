@@ -3,75 +3,6 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
-local mappings = {
-  n = {
-    -- second key is the lefthand side of the map
-    -- mappings seen under group name "Buffer"
-    ["L"] = { "<Cmd>bnext<cr>" },
-    ["H"] = { "<Cmd>bprev<cr>" },
-    ["<Leader>v"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" },
-    -- ["<c-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
-    ["gf"] = { "gF", desc = "Go to file under cursor" },
-  },
-  t = {
-    ["<Esc>"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
-  },
-}
-
-if os.getenv "COLEMAK" == "true" then
-  mappings["n"]["m"] = { "h" }
-  mappings["n"]["n"] = { "j" }
-  mappings["n"]["e"] = { "k" }
-  mappings["n"]["i"] = { "l" }
-  mappings["n"]["N"] = { "J" }
-  mappings["n"]["E"] = { "K" }
-  mappings["n"]["h"] = { "m" }
-  mappings["n"]["j"] = { "n" }
-  mappings["n"]["k"] = { "e" }
-  mappings["n"]["l"] = { "i" }
-  mappings["n"]["J"] = { "N" }
-  mappings["n"]["K"] = { "E" } -- So K is "end"
-  mappings["n"]["L"] = { "I" }
-  mappings["n"]["I"] = { "<cmd>bnext<cr>" }
-  mappings["n"]["M"] = { "<cmd>bprev<cr>" }
-  mappings["v"] = {
-    m = { "h" },
-    n = { "j" },
-    i = { "l" },
-    e = { "k" },
-    M = { "H" },
-    N = { "J" },
-    I = { "L" },
-    E = { "K" },
-    h = { "m" },
-    j = { "n" },
-    k = { "e" },
-    l = { "i" },
-    H = { "M" },
-    J = { "N" },
-    K = { "E" },
-    L = { "I" },
-  }
-  mappings["x"] = {
-    m = { "h" },
-    n = { "j" },
-    i = { "l" },
-    e = { "k" },
-    M = { "H" },
-    N = { "J" },
-    I = { "L" },
-    E = { "K" },
-    h = { "m" },
-    j = { "n" },
-    k = { "e" },
-    l = { "i" },
-    H = { "M" },
-    J = { "N" },
-    K = { "E" },
-    L = { "I" },
-  }
-end
-
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -108,6 +39,6 @@ return {
     },
     -- Mappings can be configured through AstroCore as well.
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
-    mappings = mappings,
+    mappings = require("mappings").default_mappings,
   },
 }
