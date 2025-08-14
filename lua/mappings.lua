@@ -56,6 +56,14 @@ local mappings = {
     -- ["<c-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
     ["gf"] = { "gF", desc = "Go to file under cursor" },
     ["<F7>"] = { '<Cmd>execute v:count . "ToggleTerm direction=float"<CR>', desc = "Toggle terminal" },
+    ["<Leader>yF"] = {
+      function()
+        local filepath = vim.fn.expand "%"
+        vim.fn.setreg("+", filepath)
+        vim.notify("Yanked file path: " .. filepath)
+      end,
+      desc = "Yank file path",
+    },
     ["<Leader>uq"] = {
       function() require("astrocore").set_mappings(qwerty_mappings) end,
       desc = "Use qwerty mappings",
