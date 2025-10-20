@@ -53,12 +53,13 @@ local mappings = {
     -- second key is the lefthand side of the map
     -- mappings seen under group name "Buffer"
     ["<Leader>v"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" },
-    -- ["<c-\\>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
     ["gf"] = { "gF", desc = "Go to file under cursor" },
     ["<F7>"] = { '<Cmd>execute v:count . "ToggleTerm direction=float"<CR>', desc = "Toggle terminal" },
-    ["<Leader>yF"] = {
+    ["<C-\\>"] = { '<Cmd>execute v:count . "ToggleTerm direction=float"<CR>', desc = "Toggle terminal" },
+    ["<Leader>y"] = { desc = "Yank" },
+    ["<Leader>yf"] = {
       function()
-        local filepath = vim.fn.expand "%"
+        local filepath = vim.fn.expand "%:."
         vim.fn.setreg("+", filepath)
         vim.notify("Yanked file path: " .. filepath)
       end,
@@ -74,7 +75,7 @@ local mappings = {
     },
   },
   t = {
-    ["<Esc>"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
+    ["<C-\\>"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
   },
 }
 

@@ -254,6 +254,7 @@ return {
         -- tsx = { "eslint_d" },
         terraform = { "terraform_fmt" },
         rust = { "rustfmt" },
+        toml = { "taplo" },
       },
       formatters = {
         black = {
@@ -285,7 +286,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "nvim-neotest/neotest-go",
     },
-    event = { "BufEnter *test*" },
+    event = { "BufEnter *test*.go", "BufEnter .rs" },
     config = function()
       local neotest_ns = vim.api.nvim_create_namespace "neotest"
       vim.diagnostic.config({
@@ -327,8 +328,8 @@ return {
     config = function() require("dap-go").setup() end,
     lazy = true,
     keys = {
-      { "<leader>dt", function() require("dap-go").debug_test() end, desc = "Test Nearest" },
-      { "<leader>dl", function() require("dap-go").debug_last_test() end, desc = "Test Last" },
+      { "<leader>dgt", function() require("dap-go").debug_test() end, desc = "Test Nearest" },
+      { "<leader>dgl", function() require("dap-go").debug_last_test() end, desc = "Test Last" },
     },
   },
   {
@@ -495,6 +496,35 @@ return {
     -- order to load the plugin when the command is run for the first time
     keys = {
       { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+    },
+  },
+  {
+    "greggh/claude-code.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- Required for git operations
+    },
+    lazy = false,
+    config = function()
+      require("claude-code").setup {
+        window = {
+          position = "float",
+        },
+        keymaps = {
+          variants = {
+            continue = false,
+            verbose = false,
+          },
+          window_navigation = true,
+          scrolling = true,
+        },
+      }
+    end,
+    keys = {
+      { "<leader>a", desc = "Claude Code" },
+      { "<leader>ao", function() vim.cmd [[ClaudeCode]] end, desc = "Open" },
+      { "<leader>ar", function() vim.cmd [[ClaudeCodeResume]] end, desc = "Resume" },
+      { "<leader>ac", function() vim.cmd [[ClaudeCodeContinue]] end, desc = "Continue" },
+      { "<leader>av", function() vim.cmd [[ClaudeCodeVerbose]] end, desc = "Verbose" },
     },
   },
 }
